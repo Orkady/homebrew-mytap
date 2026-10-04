@@ -5,7 +5,7 @@ cask "hover-translate" do
   url "https://hover-translate.oss-cn-beijing.aliyuncs.com/releases/Hover%20Translate-#{version}.dmg"
   name "Hover Translate"
   desc "Translate text by hovering the cursor over it"
-  homepage "https://hover-translate.oss-cn-beijing.aliyuncs.com/"
+  homepage "https://hover-translate.com/"
 
   livecheck do
     url "https://hover-translate.oss-cn-beijing.aliyuncs.com/appcast.xml"
