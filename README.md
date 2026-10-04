@@ -24,9 +24,26 @@ brew upgrade ocs-desktop
 
 ## 收录内容
 
-| Cask | 说明 | 平台 |
+| Cask | 说明 | 分发源 | 平台 |
+|---|---|---|---|
+| [ocs-desktop](Casks/ocs-desktop.rb) | OCS 网课助手桌面客户端 | GitHub Releases | macOS (Apple Silicon) |
+| [hover-translate](Casks/hover-translate.rb) | 悬停取词翻译工具 | 阿里云 OSS + Sparkle | macOS 14+ |
+
+### 两种分发模式的差异
+
+本 tap 收录的两个 cask 恰好代表了两类分发方式，编写方式不同：
+
+| | ocs-desktop | hover-translate |
 |---|---|---|
-| [ocs-desktop](Casks/ocs-desktop.rb) | OCS 网课助手桌面客户端，浏览器多开与用户脚本环境一键配置 | macOS (Apple Silicon) |
+| 有 GitHub 仓库 | ✅ | ❌ 仅官网 |
+| `livecheck` 策略 | `:github_latest` | `:sparkle` |
+| 版本来源 | GitHub Releases API | `appcast.xml` |
+| 代码签名 | adhoc，未公证（签名损坏） | Developer ID，**已公证** |
+| 需要 `xattr` 绕过 | ✅ 需要 | ❌ 不需要 |
+
+**没有 GitHub 仓库的 cask 一样可以写**，只要满足两点：能拿到稳定的下载 URL，
+以及能找到版本信息源（如 Sparkle appcast、更新页、或自行写 livecheck 规则）。
+`hover-translate` 就是用第 2 条的 `:sparkle` 策略解决版本检测的。
 
 ---
 
@@ -112,6 +129,15 @@ shasum -a 256 ocs.dmg
 
 # 算完删掉（474MB 左右，务必执行）
 rm ocs.dmg
+```
+
+对 `hover-translate` 这类 Sparkle 分发的应用，版本号和 URL 应以
+appcast 为准，不要自己猜：
+
+```bash
+# 先看 appcast 里的最新版本与真实下载地址
+curl -s "https://hover-translate.oss-cn-beijing.aliyuncs.com/appcast.xml" \
+  | grep -E "shortVersionString|enclosure url" | head -4
 ```
 
 **sha256 绝不能凭印象填写**。版本号写错 brew 会直接报错；
