@@ -8,7 +8,7 @@ cask "ocs-desktop" do
   homepage "https://docs.ocsjs.com/"
 
   livecheck do
-    url "https://api.github.com/repos/ocsjs/ocs-desktop/releases/latest"
+    url "https://github.com/ocsjs/ocs-desktop/releases/latest"
     strategy :github_latest
   end
 
