@@ -1,6 +1,6 @@
 cask "micyou" do
-  version "2.1.0"
-  sha256 "5380a7721d76a77d5ae817f61424e5f21a9d03eeda641745375c3827ff6537bc"
+  version "2.1.1"
+  sha256 "c8364b97af63b78a7e842c6a6ca194f1a84ebf46a2aeea1631ad68bac7b76cd7"
 
   url "https://github.com/MicYou-Dev/MicYou/releases/download/v#{version}/MicYou-macOS-#{version}-arm64.dmg"
   name "MicYou"

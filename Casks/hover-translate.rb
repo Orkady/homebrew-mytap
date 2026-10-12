@@ -1,6 +1,6 @@
 cask "hover-translate" do
-  version "1.5.0"
-  sha256 "5992c2364bf54cf0f2abb98ba71209595de5f81d3daa08042b70b09098d99270"
+  version "1.5.1"
+  sha256 "2c200807fdbe6bbe6fb13d6c37e18490fe759bc96efe30b9aae3c6d58745d8c8"
 
   url "https://hover-translate.oss-cn-beijing.aliyuncs.com/releases/Hover%20Translate-#{version}.dmg"
   name "Hover Translate"
