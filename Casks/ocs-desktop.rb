@@ -1,6 +1,6 @@
 cask "ocs-desktop" do
-  version "3.7.0"
-  sha256 "a97dec055fe46952fd6326be2eaa492d1234b1a914e41a82438128b18e4b07e3"
+  version "3.8.0"
+  sha256 "6bfc70a54d7582da34f2b5d86328d79dc3a1ee50191b644f26ff25f5daefb123"
 
   url "https://github.com/ocsjs/ocs-desktop/releases/download/v#{version}/ocs-#{version}-setup-mac-arm64.dmg"
   name "OCS Desktop"
