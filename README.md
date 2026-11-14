@@ -28,6 +28,8 @@ brew upgrade ocs-desktop
 |---|---|---|---|
 | [ocs-desktop](Casks/ocs-desktop.rb) | OCS 网课助手桌面客户端 | GitHub Releases | macOS (Apple Silicon) |
 | [hover-translate](Casks/hover-translate.rb) | 悬停取词翻译工具 | 阿里云 OSS + Sparkle | macOS 14+ |
+| [micyou](Casks/micyou.rb) | 把 Android 手机当电脑麦克风 | GitHub Releases | macOS (Apple Silicon) |
+| [mygo-music](Casks/mygo-music.rb) | 原生插件式音乐播放器（Go + MyGo） | GitHub Releases | macOS 13+ (Apple Silicon) |
 
 ### 两种分发模式的差异
 
