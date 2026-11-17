@@ -30,22 +30,29 @@ brew upgrade ocs-desktop
 | [hover-translate](Casks/hover-translate.rb) | 悬停取词翻译工具 | 阿里云 OSS + Sparkle | macOS 14+ |
 | [micyou](Casks/micyou.rb) | 把 Android 手机当电脑麦克风 | GitHub Releases | macOS (Apple Silicon) |
 | [mygo-music](Casks/mygo-music.rb) | 原生插件式音乐播放器（Go + MyGo） | GitHub Releases | macOS 13+ (Apple Silicon) |
+| [bageshuo](Casks/bageshuo.rb) | 网易叭哥说，AI 语音输入与翻译工具 | 网易有道官方 CDN + JSON 更新接口 | macOS 11+ (Apple Silicon / Intel) |
 
-### 两种分发模式的差异
+### 不同分发模式的差异
 
-本 tap 收录的两个 cask 恰好代表了两类分发方式，编写方式不同：
+以下三个 cask 分别展示了不同的分发方式：
 
-| | ocs-desktop | hover-translate |
-|---|---|---|
-| 有 GitHub 仓库 | ✅ | ❌ 仅官网 |
-| `livecheck` 策略 | `:github_latest` | `:sparkle` |
-| 版本来源 | GitHub Releases API | `appcast.xml` |
-| 代码签名 | adhoc，未公证（签名损坏） | Developer ID，**已公证** |
-| 需要 `xattr` 绕过 | ✅ 需要 | ❌ 不需要 |
+| | ocs-desktop | hover-translate | bageshuo |
+|---|---|---|---|
+| 有 GitHub 仓库 | ✅ | ❌ 仅官网 | ❌ 仅官网 |
+| `livecheck` 策略 | `:github_latest` | `:sparkle` | `:json` |
+| 版本来源 | GitHub Releases API | `appcast.xml` | `latest.json` 的 `version` 字段 |
+| 代码签名 | adhoc，未公证（签名损坏） | Developer ID，**已公证** | Developer ID，**已公证** |
+| 需要 `xattr` 绕过 | ✅ 需要 | ❌ 不需要 | ❌ 不需要 |
 
 **没有 GitHub 仓库的 cask 一样可以写**，只要满足两点：能拿到稳定的下载 URL，
 以及能找到版本信息源（如 Sparkle appcast、更新页、或自行写 livecheck 规则）。
 `hover-translate` 就是用第 2 条的 `:sparkle` 策略解决版本检测的。
+
+`bageshuo` 则从官方 [latest.json](https://codown.youdao.com/bageshuo/latest.json)
+读取版本号，使用其中的固定版本通用 `.app.tar.gz` 包。官网首页的 DMG
+地址会随新版覆盖，且页面脚本中的备用链接可能落后于正式版，因此维护时应以
+`latest.json` 中 `platforms` 下的实际下载地址为准，重新下载并计算 SHA-256。
+Apple Silicon 和 Intel 当前使用同一个包与校验值。
 
 ---
 
@@ -202,13 +209,17 @@ GitHub Actions、npm、pip 等生态的依赖），所以本 tap 的版本更新
 
 ## 说明
 
-- 本 tap 仅支持 Apple Silicon（`ocs-desktop` 上游未提供 Intel 构建）。
+- 各 cask 支持的平台与最低系统版本见上表；`bageshuo` 同时支持
+  Apple Silicon 和 Intel，`ocs-desktop` 上游未提供 Intel 构建。
 - `ocs-desktop` 上游为 Electron 应用，使用 adhoc 签名且未公证。
   cask 中的 `xattr -cr` 只能清除 quarantine 属性，无法修复签名本身。
   若安装后双击无法启动，需到
   `系统设置 → 隐私与安全性` 点击「仍要打开」，这是上游应用的状态，
   不是本 cask 的缺陷。
-- `zap trash` 清单基于 Electron 应用的标准路径推导。首次
+- `bageshuo` 的 `zap trash` 清单按应用标识 `com.bageshuo` 的标准路径配置，
+  只在显式执行 `brew uninstall --zap` 时清理，可能包含偏好、登录状态与本地历史。
+  未启动应用验证实际数据路径；用户主动导出的文档与录音不在清理清单中。
+- 其他 cask 的 `zap trash` 清单基于各自应用的标准路径推导。首次
   `brew uninstall --zap` 后建议核对实际残留并按需修正。
 
 ## License
