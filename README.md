@@ -54,6 +54,11 @@ brew upgrade ocs-desktop
 `latest.json` 中 `platforms` 下的实际下载地址为准，重新下载并计算 SHA-256。
 Apple Silicon 和 Intel 当前使用同一个包与校验值。
 
+`bageshuo` 声明 `auto_updates true`，表示支持应用内自更新。Homebrew 默认会在
+`brew outdated` 和 `brew upgrade` 中跳过它；如需按 tap 版本检查或升级，
+可加 `--greedy`。这个标记不会开启应用设置中的自动更新开关，tap 中的
+安装版本与校验值仍需单独维护。
+
 ---
 
 ## 如何检查与处理软件更新
